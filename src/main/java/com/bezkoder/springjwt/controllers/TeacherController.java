@@ -54,40 +54,19 @@ public class TeacherController {
     }
 
 
-    @GetMapping("/selectRequest/{id}")
-    public String selectRequest(@PathVariable(value = "id") Long id, Model model) {
-        Request request = requestService.getRequestById(id);
-        global_request = request;
-        List<Lesson> lessons = lessonService.getStudentLesson(request.getId());
-        model.addAttribute("request", request);
-        model.addAttribute("lessons", lessons);
-
-        return "check_request";
-    }
-
     @GetMapping("/getTeacherRequestsById/{id}")
     public ResponseEntity<List<Request>> getTeacherRequestsById(@PathVariable("id") Long id) {
         List<Request> requestList = requestService.getTeacherRequests(id);
         return new ResponseEntity<>(requestList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/acceptRequest", method = RequestMethod.GET)
-    public String acceptRequest() {
-        Request request = requestService.getRequestById(global_request.getId());
-        request.setTimestamp(getTime());
-        request.setStatus("Accepted");
-        requestService.saveRequest(request);
-        return "redirect:/teacher/writeLetter";
-    }
-
-    @GetMapping("/rejectRequest/{id}")
-    public ResponseEntity<Request> rejectRequest(@PathVariable("id") Long id) {
+    @PostMapping("/rejectRequest")
+    public ResponseEntity<Request> rejectRequest(@RequestBody Long id) {
         Request request = requestService.getRequestById(id);
         request.setStatus("rejected");
         requestService.saveRequest(request);
         return new ResponseEntity<>(request, HttpStatus.OK);
     }
-
 
     @PostMapping("/saveLetter")
     public ResponseEntity<RecommendationLetter> saveRequest(@RequestBody RecommendationLetter letter) {
