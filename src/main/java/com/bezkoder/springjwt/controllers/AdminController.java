@@ -7,6 +7,7 @@ import com.bezkoder.springjwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -46,6 +47,7 @@ public class AdminController {
     @PutMapping("/add/{roleName}")
     public ResponseEntity<User> addUser(@PathVariable("roleName") String roleName,@RequestBody User user) throws Exception {
         Set<Role> roles = new HashSet<>();
+
 
         if (roleName == null) {
             Role userRole = roleRepository.findByName("ROLE_STUDENT");
@@ -89,7 +91,13 @@ public class AdminController {
         }
 
         user.setRoles(roles);
-        userService.save(user);
+
+        if(user.getPassword().length()<=12) {
+            userService.save(user);
+        } else {
+            userService.update(user);
+        }
+
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -99,7 +107,14 @@ public class AdminController {
         oldUser.setPassword(user.getPassword());
         oldUser.setImageUrl(user.getImageUrl());
         oldUser.setUsername(user.getUsername());
-        User updateUser = userService.save(oldUser);
+
+        User updateUser = null;
+        if(user.getPassword().length()<=12) {
+            updateUser =  userService.save(oldUser);
+        } else {
+             updateUser = userService.update(oldUser);
+        }
+
         return new ResponseEntity<>(updateUser, HttpStatus.OK);
     }
 

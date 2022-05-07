@@ -52,6 +52,11 @@ public class UserService implements UserServiceInterface {
         return user;
     }
 
+    public User update(User user)  {
+            repoUser.save(user);
+        return user;
+    }
+
     @Override
     public User get(Long id) {
         return repoUser.findById(id).get();
