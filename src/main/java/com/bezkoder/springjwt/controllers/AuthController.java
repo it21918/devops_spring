@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+
+import com.bezkoder.springjwt.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +43,10 @@ public class AuthController {
     PasswordEncoder encoder;
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -103,6 +109,10 @@ public class AuthController {
         user.setEnabled(true);
         user.setRoles(roles);
         userRepository.save(user);
+
+        emailService.sendMail("dddevops2022@@gmail.com", "Test Subject", "Test mail");
+
+
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }
