@@ -37,11 +37,11 @@ pipeline {
         stage('Prepare DB') {
             steps {
                 sshagent (credentials: ['ssh-deployment-1']) {
-                    sh '''
-                        pwd
-                        echo $WORKSPACE
-                        ansible-playbook -i ~/workspace/ansible-project/hosts.yml -l database ~/workspace/ansible-project/playbooks/mysql-database.yml
-                        '''
+//                     sh '''
+//                         pwd
+//                         echo $WORKSPACE
+//                         ansible-playbook -i ~/workspace/ansible-project/hosts.yml -l database ~/workspace/ansible-project/playbooks/mysql-database.yml
+//                         '''
             }
             }
         }
