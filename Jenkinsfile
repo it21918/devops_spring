@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'main', url: 'https://github.com/it21918/devops_spring.git'
+                git branch: 'it21918-patch-1', url: 'https://github.com/it21918/devops_spring.git'
 
 
             }
