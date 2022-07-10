@@ -1,5 +1,6 @@
 package com.bezkoder.springjwt.security;
 
+
 import com.bezkoder.springjwt.security.jwt.AuthEntryPointJwt;
 import com.bezkoder.springjwt.security.jwt.AuthTokenFilter;
 import com.bezkoder.springjwt.security.services.UserDetailsServiceImpl;
@@ -59,10 +60,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/test").permitAll()
-                .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers("/teacher/**").hasAuthority("ROLE_TEACHER")
-                .antMatchers("/student/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_TEACHER")
+                .antMatchers("/**").permitAll()
+                //.antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                // .antMatchers("/teacher/**").hasAuthority("ROLE_TEACHER")
+                // .antMatchers("/student/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_TEACHER")
                 .antMatchers("/api/auth/**").permitAll().anyRequest().authenticated();
 
 

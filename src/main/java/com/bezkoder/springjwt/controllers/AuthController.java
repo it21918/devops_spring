@@ -110,8 +110,7 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        emailService.sendMail("dddevops2022@@gmail.com", "Test Subject", "Test mail");
-
+        //emailService.sendMail("dddevops2022@@gmail.com", "Test Subject", "Test mail");
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
