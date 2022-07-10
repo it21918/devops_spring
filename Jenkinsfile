@@ -23,9 +23,6 @@ pipeline {
         }
         stage('install ansible prerequisites') {
             steps {
-                sh '''
-                    ansible-galaxy install geerlingguy.postgresql
-                '''
 
                 sh '''
                     mkdir -p ~/workspace/ansible-pipeline/files/certs
